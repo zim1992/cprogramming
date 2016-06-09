@@ -1,0 +1,7 @@
+   id		name				
+  100		Geography
+  200		Chemistry
+  250		Physics
+  300		Maths
+  400		Programming
+

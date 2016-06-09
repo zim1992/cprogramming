@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <string.h>
+
+
+#ifndef TYPEDEF_ENUM_BOOLEAN_DECLARED_
+#define TYPEDEF_ENUM_BOOLEAN_DECLARED_
+	typedef enum{ false, true } boolean;
+	char* bool_print[] = {"no", "yes"};
+#endif
+
+#ifndef BOOL_PRINT_DECLARED_
+#define BOOL_PRINT_DECLARED_
+	#define BOOL_FMT(bool_expr) "%s", (bool_expr) ? "true" : "false"
+#endif
+
+
+typedef struct student student;
+typedef struct course course;
+typedef struct exam exam;
+typedef struct stats stats;
+
+
+struct student {
+	short id;		/* unique identity of the student			*/
+	char name[30]; 		/* name of student 					*/
+	int age;		/* age of student					*/
+};
+
+struct course {
+	short id;		/* unique identity of the course			*/
+	char name[30]; 		/* name of course 					*/
+};
+
+
+struct exam {
+	student* student;	/* pointer to student 					*/
+	course* course;		/* pointer to the course				*/
+	short grade;		/* grade obtained by student for this exam		*/
+};
+
+/* single student may pass or fail the course more than once  */
+struct stats {	
+	course* course;		/* pointer to a course					*/
+	short numberOfPasses;		/* number of students that passed			*/
+	short numberOfFails;		/* number of students that failed			*/
+	short numberOfStudents;		/* number of different students for this course		*/
+	stats* next;		/* pointer to next element				*/
+};
+
+
+
+/* function prototypes */
+student** input_student_info ( student** stud_ptr , int* numberOfStuds);    
+		/* at start and exit: numberOfStuds indicates about how many students info is stored  	*/
+		/* stud_ptr is the variable used to access info about all the students                	*/ 
+		
+
+course** input_course_info ( course** course_ptr , int* numberOfCourses);    
+		/* at start and exit: numberOfCourses indicates about how many courses info is stored  	*/
+		/* course_ptr is the variable used to access info about all the courses                	*/ 
+
+	
+/* This function prototype is changed!! */
+
+exam** input_exam_info ( exam** exam_ptr , int* numberOfResults, 
+			 course** course_ptr, int numberOfCourses,
+			 student** stud_ptr, int numberOfStuds,
+			 boolean* success );    
+		/* exam_ptr is the variable used to access all the exam results				*/
+		/* at start and exit: numberOfResults indicates the number of exam results stored  	*/
+		/* course_ptr is the variable used to access all the courses				*/
+		/* numberOfCourses indicates about how many courses info is stored  			*/  
+		/* stud_ptr is the variable used to access all the students				*/ 	
+		/* numberOfStuds indicates about how many students info is stored			*/
+		/* at exit: success indicates whether the exam info has been succesfully stored		*/ 
+
+
+
+void update_stats ( course** course_ptr , int numberOfCourses, 
+         	    exam** exam_ptr , int numberOfResults,
+		    stats** stats_ptr );    
+		/* numberOfCourses indicates about how many courses info is stored  			*/
+		/* courses_ptr is the variable used to access all the courses				*/ 
+		/* numberOfResults indicates the number of results stored  				*/
+		/* exam_ptr is the variable used to access all the exam results				*/ 		
+		/* stats_ptr is the variable used to access the statistics of all courses		*/ 		
+
+
