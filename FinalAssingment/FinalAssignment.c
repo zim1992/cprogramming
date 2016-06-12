@@ -20,7 +20,8 @@ struct exam {
 	struct course* course;		 /*pointer to the course				*/
 	short grade;		/* grade obtained by student for this exam		*/
 };
-void input_student_info()
+struct student stud[50];
+void input_student_info(int *studRecIncriment)
 {
 	int lastChar;
 	int secLastChar;
@@ -31,6 +32,7 @@ void input_student_info()
 	int incrimenter=0;
 	char letter;
 	char tempAgeChar[2];
+	int optionSelector;
 	file = fopen("students.txt", "r");
 	if(file==NULL)
 	{
@@ -42,6 +44,7 @@ void input_student_info()
 		int readLocation = 0;
 		while((lastChar=getc(file))!= EOF)
 		{
+			/*Used to skip the first line as it contains the names for the tables*/
 			
 			while((clearHeader==0)&&((lastChar=getc(file))!= EOF))
 			{
@@ -68,12 +71,12 @@ void input_student_info()
 					// printf("%s\n", "b");
 					break;
 				case 2://reads the 2nd value
-					tempName[incrimenter]=letter;
+					stud[*studRecIncriment].name[incrimenter]=letter;
 					incrimenter++;
 					// printf("%s\n", "c");
 					break;
 				case 3://waits for the tabs
-					tempName[incrimenter]='\0';
+					stud[*studRecIncriment].name[incrimenter]='\0';
 					readLocation=4;
 					// printf("%s\n", "d");
 					break;
@@ -86,16 +89,16 @@ void input_student_info()
 					incrimenter++;
 					break;
 				case 6: //logs the data
-					short id = atoi(tempIdChar);
-					printf("%d\t", id);
+					stud[*studRecIncriment].id = atoi(tempIdChar);
+					stud[*studRecIncriment].age = atoi(tempAgeChar);
 					incrimenter = 0;
-					while(tempName[incrimenter]!='\0')
-						printf("%c",tempName[incrimenter++]);
-					incrimenter = 0;
-					printf("%s", "\t");
-					int age = atoi(tempAgeChar);
-					printf("%d\n", age);
-						
+					// printf("%d\t", stud[*studRecIncriment].id);
+					// while(stud[*studRecIncriment].name[incrimenter]!='\0')
+					// 	printf("%c",stud[*studRecIncriment].name[incrimenter++]);
+					// incrimenter = 0;
+					// printf("%s", "\t");					
+					// printf("%d\n", stud[*studRecIncriment].age);
+					*studRecIncriment=*studRecIncriment+1;	
 					readLocation = 0;
 					break;
 				}
@@ -124,6 +127,9 @@ void input_course_info()
 		printf("%s\n","couldn't load the file" );
 		exit(1);
 	}
+	if(file2){
+
+	}
 
 }
 void input_exam_info()
@@ -132,7 +138,20 @@ void input_exam_info()
 }
 int main()
 {
-	input_student_info();
+	int studentRec=0;
+	int incrimenter;
+	input_student_info(&studentRec);
+	for(int count=0;count<studentRec;count++){
+		printf("%d\t", stud[count].id);
+		incrimenter = 0;
+		while(stud[count].name[incrimenter]!='\0')
+			printf("%c",stud[count].name[incrimenter++]);
+		incrimenter = 0;
+		printf("%s", "\t");					
+		printf("%d\n", stud[count].age);
+
+	}
+
 	/* code */
 	return 0;
 }
