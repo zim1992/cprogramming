@@ -12,6 +12,7 @@ int main()
 	int programExiter = 0;
 	struct student studData[50];
 	struct course corsMat[50];
+	struct exam examResult[50];
 	printf("%s\n","This program will be used to record information regarding students , Courses and exams.\n");
 	/*This is the option menu which runs the program*/
 	while(!programExiter){
