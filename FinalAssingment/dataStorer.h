@@ -18,6 +18,33 @@ struct exam {
 	struct course* course;		/* pointer to the course					*/
 	short grade;				/* grade obtained by student for this exam	*/
 };
+void printStudentInformation(struct student stud[], int *numberOfStudents)
+{
+	printf("%s\n","id\tName\t\tAge");
+	for(int count=0;count<*numberOfStudents;count++){
+		printf("%d\t", stud[count].id);
+		int incrimenter = 0;
+		while(stud[count].name[incrimenter]!='\0')
+			printf("%c",stud[count].name[incrimenter++]);
+		incrimenter = 0;
+		printf("%s", "\t");					
+		printf("%d\n", stud[count].age);
+
+	}
+
+}
+void printCorsInformation(struct course corse[], int *numberOfCourses)
+{
+	for(int count=0;count<*numberOfCourses;count++){
+		printf("%d\t", corse[count].id);
+		int incrimenter = 0;
+		while(corse[count].name[incrimenter]!='\0')
+			printf("%c",corse[count].name[incrimenter++]);
+		incrimenter = 0;
+		printf("%s","\n" );
+	}
+
+}
 void input_student_info(struct student stud[],int *studRecIncriment)
 {
 	int lastChar; /*This is used to store the */
@@ -165,5 +192,8 @@ void input_course_info(struct course cors[], int *coursRecNum)
 }
 void input_exam_info(struct exam exams[], int *numberOfResults, struct course cors[], int *numberOfCourses,struct student stud[], int *numberOfStudents)
 {
-
+	printf("%s\n", "We are going add a grade to a student");
+	printStudentInformation(stud,numberOfStudents);
+	printf("%s\n","To do so we request that you type the id of the student which you would like to add exam records of:");
+	// scanf()
 }

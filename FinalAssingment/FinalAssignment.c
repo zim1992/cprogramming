@@ -5,9 +5,8 @@
 int main()
 {
 	int studentRec=0;
-	int examCourseRec=0;
+	int courseRec=0;
 	int numberOfResults =0;
-	int incrimenter;
 	int menuSelector=0;
 	int programExiter = 0;
 	struct student studData[50];
@@ -22,35 +21,19 @@ int main()
 			/*This adds the data stored about students  */
 			case 1: input_student_info(studData, &studentRec);
 				break;
-			case 2: input_course_info(corsMat, &examCourseRec);
+			case 2: input_course_info(corsMat, &courseRec);
 				break;
-			case 3:
+			case 3: input_exam_info(examResult, &numberOfResults, corsMat, &courseRec,studData, &studentRec);
 				break;
 			case 4:
 				break;
 			case 5:
 				break;
 			/*This prints the stored records to the consol*/
-			case 6:	for(int count=0;count<studentRec;count++){
-						printf("%d\t", studData[count].id);
-						incrimenter = 0;
-						while(studData[count].name[incrimenter]!='\0')
-							printf("%c",studData[count].name[incrimenter++]);
-						incrimenter = 0;
-						printf("%s", "\t");					
-						printf("%d\n", studData[count].age);
-
-					}
+			case 6: printStudentInformation(studData, &studentRec);
 				break;
 			/*This Prints all the data stored in exams*/
-			case 7:	for(int count=0;count<examCourseRec;count++){
-						printf("%d\t", corsMat[count].id);
-						incrimenter = 0;
-						while(corsMat[count].name[incrimenter]!='\0')
-							printf("%c",corsMat[count].name[incrimenter++]);
-						incrimenter = 0;
-						printf("%s","\n" );
-					}
+			case 7:	printCorsInformation(corsMat, &courseRec);
 				break;
 			case 8:
 				break;

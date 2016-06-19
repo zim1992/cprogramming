@@ -2,10 +2,7 @@
 #include <stdlib.h>
 void incrimentinal(int *john)
 {
-	// int hel = *john;
-	// printf("The address of val2: %p\n",(void*) &hel);
 	*john = *john +1;
-	// printf("the val of hel: %d\n",hel);
 }
 int main()
 {
@@ -14,4 +11,15 @@ int main()
 	incrimentinal(&val);
 	printf("the val: %d\n", val );
 	return 0;
+	/*This code is just for testing purposes */
+	// for(int count=0;count<studentRec;count++){
+	// 	printf("%d\t", stud[count].id);
+	// 	incrimenter = 0;
+	// 	while(stud[count].name[incrimenter]!='\0')
+	// 		printf("%c",stud[count].name[incrimenter++]);
+	// 	incrimenter = 0;
+	// 	printf("%s", "\t");					
+	// 	printf("%d\n", stud[count].age);
+
+	// }
 }
