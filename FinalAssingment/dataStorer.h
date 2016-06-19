@@ -14,8 +14,8 @@ struct course {
 	char name[30]; 	/* name of course 					*/
 };
 struct exam {
-	struct student* student;	/* pointer to student 						*/
-	struct course* course;		/* pointer to the course					*/
+	struct student students;	/* pointer to student 						*/
+	struct course course;		/* pointer to the course					*/
 	short grade;				/* grade obtained by student for this exam	*/
 };
 void printStudentInformation(struct student stud[], int *numberOfStudents)
@@ -35,6 +35,7 @@ void printStudentInformation(struct student stud[], int *numberOfStudents)
 }
 void printCorsInformation(struct course corse[], int *numberOfCourses)
 {
+	printf("%s\n", "id\tCourse");
 	for(int count=0;count<*numberOfCourses;count++){
 		printf("%d\t", corse[count].id);
 		int incrimenter = 0;
@@ -192,8 +193,49 @@ void input_course_info(struct course cors[], int *coursRecNum)
 }
 void input_exam_info(struct exam exams[], int *numberOfResults, struct course cors[], int *numberOfCourses,struct student stud[], int *numberOfStudents)
 {
-	printf("%s\n", "We are going add a grade to a student");
+	int tempId;
+	int studRecNum=0;
+	int coursRecNum=0;
+	int validator=0;
+	short grade=0;
+	printf("%s\n", "We are going add a grade to a student for which an exam was conducted");
 	printStudentInformation(stud,numberOfStudents);
 	printf("%s\n","To do so we request that you type the id of the student which you would like to add exam records of:");
-	// scanf()
+	scanf("%d",&tempId);
+	for(int counter=0;counter<*numberOfStudents;counter++){//used to search for sudent record
+		if(tempId==stud[counter].id){
+			studRecNum = counter;
+			validator=1;
+			break;			
+		}
+	}
+	if(validator==0){
+		printf("%s\n", "the following record does not exist\n Please first add the following user into the file containing the record.\n\n");
+	}else{
+		validator=0;
+		printCorsInformation(cors,numberOfCourses);
+		printf("%s\n", "Could you please input the course code");
+		scanf("%d",&tempId);
+		for(int counter=0;counter<*numberOfCourses;counter++){
+			if(tempId==cors[counter].id){
+				coursRecNum=counter;
+				validator=1;
+				break;
+			}
+		}
+		if(validator=0){
+			printf("%s\n", "The following course code could not be found. Please add the following course code in the course file");
+		}else{
+			while((grade<1)||(grade>10)){
+				printf("%s\n", "Please insert the grade of the user. The grade should be between 1 and 10");
+				scanf("%hu",&grade);
+			}
+			exams[*numberOfResults].students=stud[studRecNum];
+			exams[*numberOfResults].course=cors[coursRecNum];
+			exams[*numberOfResults].grade=grade;
+			printf("%s\n",exams[*numberOfResults].students.name);
+			*numberOfResults=*numberOfResults+1;
+		}
+	}
+	
 }
