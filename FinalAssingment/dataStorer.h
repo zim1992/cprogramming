@@ -274,11 +274,9 @@ void update_stats(struct stats stat[],struct course cors[], int* numberOfCourses
 		for(int counter2=0;counter2<*numberOfResults;counter2++){
 			if((strcmp(cors[counter1].name,exams[counter2].course.name)==0)&&(exams[counter2].grade>=6)){
 				numberOfPasses++;
-				printf("%s\n", "student passed");
 			}
 			if((strcmp(cors[counter1].name,exams[counter2].course.name)==0)&&(exams[counter2].grade<6)){
 				numberOfFails++;
-				printf("%s\n", "student failed");
 			}
 		}
 		numberOfStudents=numberOfPasses+numberOfFails;

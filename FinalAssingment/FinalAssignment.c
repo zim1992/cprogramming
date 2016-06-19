@@ -25,11 +25,12 @@ int main()
 			/*This adds data stored about courses*/
 			case 2: input_course_info(corsMat, &courseRec);
 				break;
+			/*This is used input information regarding */
 			case 3: input_exam_info(examResult, &numberOfResults, corsMat, &courseRec,studData, &studentRec);
 				break;
 			case 4: update_stats(examStats,corsMat, &courseRec,examResult, &numberOfResults);
 				break;
-			case 5:
+			case 5: 
 				break;
 			/*This prints the stored records to the consol*/
 			case 6: printStudentInformation(studData, &studentRec);
