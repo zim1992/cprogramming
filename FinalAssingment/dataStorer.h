@@ -3,6 +3,7 @@ typedef struct student student;
 typedef struct course course;
 typedef struct exam exam;
 typedef struct stats stats;
+int strcmp(const char *str1, const char *str2);
 FILE *file, *file2;
 struct student {
 	short id;		/* unique identity of the student	*/
@@ -17,6 +18,13 @@ struct exam {
 	struct student students;	/* pointer to student 						*/
 	struct course course;		/* pointer to the course					*/
 	short grade;				/* grade obtained by student for this exam	*/
+};
+struct stats {	
+	struct course course;				/* pointer to a course					*/
+	short numberOfPasses;		/* number of students that passed			*/
+	short numberOfFails;		/* number of students that failed			*/
+	short numberOfStudents;		/* number of different students for this course		*/
+	// stats next;					/* pointer to next element				*/
 };
 void printStudentInformation(struct student stud[], int *numberOfStudents)
 {
@@ -43,6 +51,17 @@ void printCorsInformation(struct course corse[], int *numberOfCourses)
 			printf("%c",corse[count].name[incrimenter++]);
 		incrimenter = 0;
 		printf("%s","\n" );
+	}
+
+}
+void printStatInformation(struct stats stat[], int *numberOfCourses)
+{
+	printf("%s\n", "course Name\tNumber of Passes\tNumber of Fails\tNumber of Students");
+	for(int count=0;count<*numberOfCourses;count++){
+		printf("%s\t\t", stat[count].course.name);
+		printf("%d\t\t",stat[count].numberOfPasses);
+		printf("%d\t\t", stat[count].numberOfFails);
+		printf("%d\n", stat[count].numberOfStudents);
 	}
 
 }
@@ -202,7 +221,8 @@ void input_exam_info(struct exam exams[], int *numberOfResults, struct course co
 	printStudentInformation(stud,numberOfStudents);
 	printf("%s\n","To do so we request that you type the id of the student which you would like to add exam records of:");
 	scanf("%d",&tempId);
-	for(int counter=0;counter<*numberOfStudents;counter++){//used to search for sudent record
+	/*Used to search for desired student*/
+	for(int counter=0;counter<*numberOfStudents;counter++){
 		if(tempId==stud[counter].id){
 			studRecNum = counter;
 			validator=1;
@@ -216,6 +236,7 @@ void input_exam_info(struct exam exams[], int *numberOfResults, struct course co
 		printCorsInformation(cors,numberOfCourses);
 		printf("%s\n", "Could you please input the course code");
 		scanf("%d",&tempId);
+		/*Search for a course model*/
 		for(int counter=0;counter<*numberOfCourses;counter++){
 			if(tempId==cors[counter].id){
 				coursRecNum=counter;
@@ -226,16 +247,45 @@ void input_exam_info(struct exam exams[], int *numberOfResults, struct course co
 		if(validator=0){
 			printf("%s\n", "The following course code could not be found. Please add the following course code in the course file");
 		}else{
+			/*A grade is inputting inth the system*/
 			while((grade<1)||(grade>10)){
 				printf("%s\n", "Please insert the grade of the user. The grade should be between 1 and 10");
 				scanf("%hu",&grade);
 			}
+			/*The information is stored*/
 			exams[*numberOfResults].students=stud[studRecNum];
 			exams[*numberOfResults].course=cors[coursRecNum];
 			exams[*numberOfResults].grade=grade;
-			printf("%s\n",exams[*numberOfResults].students.name);
+			printf("You have succesfully entered the following grade %hu was given to %s for the course %s. ",grade,exams[*numberOfResults].students.name,exams[*numberOfResults].course.name);
 			*numberOfResults=*numberOfResults+1;
 		}
 	}
 	
 }
+void update_stats(struct stats stat[],struct course cors[], int* numberOfCourses, struct exam exams[], int* numberOfResults)
+{
+	int numberOfPasses=0;
+	int numberOfFails=0;
+	int numberOfStudents=0;
+	for(int counter1=0;counter1<*numberOfCourses;counter1++){
+		numberOfPasses=0;
+		numberOfFails=0;
+		numberOfStudents=0;
+		for(int counter2=0;counter2<*numberOfResults;counter2++){
+			if((strcmp(cors[counter1].name,exams[counter2].course.name)==0)&&(exams[counter2].grade>=6)){
+				numberOfPasses++;
+				printf("%s\n", "student passed");
+			}
+			if((strcmp(cors[counter1].name,exams[counter2].course.name)==0)&&(exams[counter2].grade<6)){
+				numberOfFails++;
+				printf("%s\n", "student failed");
+			}
+		}
+		numberOfStudents=numberOfPasses+numberOfFails;
+		stat[counter1].course=cors[counter1];
+		stat[counter1].numberOfPasses = numberOfPasses;
+		stat[counter1].numberOfFails = numberOfFails;
+		stat[counter1].numberOfStudents = numberOfStudents;
+	}
+
+}    
